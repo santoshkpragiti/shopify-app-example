@@ -18,8 +18,21 @@
   <script type="text/javascript">
     ShopifyApp.ready(function() {
       ShopifyApp.Bar.initialize({
-        title: '<%= token %>'
+        title: 'Settings',
+        buttons: {
+          primary: {
+            label: 'Save',
+            message: 'save',
+            callback: function(){
+              ShopifyApp.Bar.loadingOn();
+              ShopifyApp.flashNotice("Unicorn was created successfully.");
+              ShopifyApp.Bar.loadingOff()
+              
+            }
+          }
+        }
       });
+      ShopifyApp.Bar.loadingOff()
     });
   </script>
 </body>
