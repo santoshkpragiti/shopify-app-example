@@ -1,7 +1,7 @@
 const ShopifyToken = require('shopify-token');
 
 // Require the keys to configure the helper
-const keys = require('config/keys');
+const keys = require('../config/keys');
 
 // Initialize once to be shared across the application 
 const shopifyToken = new ShopifyToken({

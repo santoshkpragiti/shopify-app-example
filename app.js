@@ -4,10 +4,27 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const mongoose = require('mongoose');
 
+// Require Keys from dev or prod depending on node env
+const keys = require('./config/keys');
+
+// Require the Routes files
 var index = require('./routes/index');
 var users = require('./routes/users');
 const authRoutes = require('./routes/auth');
+
+// Connect to MongoDB
+mongoose.connect(keys.mongoUri, {useMongoClient: true});
+
+// Verify that the connection is stablished
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Correctly Connected to MongoDB');
+});
 
 var app = express();
 
@@ -22,6 +39,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Define the express session
+app.use(session({
+  secret: keys.secretSession,
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
 
 app.use('/', index);
 app.use('/users', users);
