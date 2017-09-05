@@ -7,7 +7,7 @@ const ShopifyToken = require('../services/shopify-token');
 /* TODO: Need to create middleware for validating that subscriber has cookie */
 router.get('/', (req, res, next) => {
 
-  if (req.query.shop && req.session.ShopifyTokens[req.query.shop] && req.query.apiKey) {
+  if (req.query.shop && req.query.apiKey && req.session.ShopifyTokens && req.session.ShopifyTokens[req.query.shop]) {
     //Render the Settings Index with EASDK skeleton
     //return res.render('settings/index', {token, apiKey: ShopifyToken.apiKey, shop: req.query.shop });
     
