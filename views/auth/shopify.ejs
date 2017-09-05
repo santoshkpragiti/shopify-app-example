@@ -23,7 +23,12 @@
           location: "<%- authUrl %>"
         }
       });
+<<<<<<< HEAD
       window.parent.postMessage(message, "https://<%- shopHandle + '.myshopify.com' %>");
+=======
+      console.log('tried to change location');
+      window.parent.postMessage(message, "https://<%= shopHandle + '.myshopify.com' %>");
+>>>>>>> 02-add-react
     }
   </script>
 </head>
