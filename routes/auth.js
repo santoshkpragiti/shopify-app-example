@@ -50,9 +50,8 @@ router.get('/shopify/callback', function(req, res, next) {
         req.session.ShopifyTokens[shop] = token;
       }
       else {
-        req.session.ShopifyTokens = {
-          shop: token
-        };
+        req.session.ShopifyTokens = {};
+        req.session.ShopifyTokens[shop] = token;
       }
       res.redirect('https://'+shop+'/admin/apps/'+ShopifyToken.apiKey+'/settings?shop=' + shop + '&apiKey=' + ShopifyToken.apiKey);
     })
