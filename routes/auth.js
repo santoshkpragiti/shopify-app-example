@@ -45,17 +45,16 @@ router.get('/shopify/callback', function(req, res, next) {
       const shopHandle = hostname.split('.myshopify.com')[0];
 
       if (req.session.ShopifyTokens) {
-        req.session.ShopifyTokens[shopHandle] = token;
+        req.session.ShopifyTokens[hostname] = token;
       }
       else {
         req.session.ShopifyTokens = {
-          shopHandle: token
+          hostname: token
         };
       }
-
-      res.send(token);
-
-    });
+      res.redirect('/settings?shop=' + hostname);
+    })
+    .catch((err) => next(err));
 });
 
 module.exports = router;

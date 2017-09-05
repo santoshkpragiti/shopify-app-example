@@ -6,9 +6,14 @@
   <script type='text/javascript'>
     // If the current window is the 'parent', change the URL by setting location.href
     if (window.top == window.self) {
+<<<<<<< HEAD
       
       window.top.location.href = "<%- authUrl %>";
       
+=======
+      window.top.location.href = "<%- authUrl %>";
+
+>>>>>>> 01-EASDK-Skeleton
       // If the current window is the 'child', change the parent's URL with postMessage
     }
     else {

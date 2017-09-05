@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.shopify.com/s/assets/external/app.js"></script>
+  <script type="text/javascript">
+    ShopifyApp.init({
+      apiKey: '<%= apiKey %>',
+      shopOrigin: 'https://<%= shop %>'
+    });
+    
+  </script>
+  <title>
+    <%- token %>
+  </title>
+</head>
+<body>
+  <%- token %>
+  <script type="text/javascript">
+    ShopifyApp.ready(function() {
+      ShopifyApp.Bar.initialize({
+        title: 'Settings',
+        buttons: {
+          primary: {
+            label: 'Save',
+            message: 'save',
+            callback: function(){
+              ShopifyApp.Bar.loadingOn();
+              ShopifyApp.flashNotice("Unicorn was created successfully.");
+              ShopifyApp.Bar.loadingOff()
+              
+            }
+          }
+        }
+      });
+      ShopifyApp.Bar.loadingOff()
+    });
+  </script>
+</body>
+</html>

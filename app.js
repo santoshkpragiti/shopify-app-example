@@ -15,6 +15,7 @@ const keys = require('./config/keys');
 var index = require('./routes/index');
 var users = require('./routes/users');
 const authRoutes = require('./routes/auth');
+const settingsRoutes = require('./routes/settings');
 
 // Connect to MongoDB
 mongoose.connect(keys.mongoUri, {useMongoClient: true});
@@ -51,6 +52,7 @@ app.use(session({
 app.use('/', index);
 app.use('/users', users);
 app.use('/auth', authRoutes);
+app.use('/settings', settingsRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
