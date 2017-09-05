@@ -57,7 +57,6 @@ app.use('/auth', authRoutes);
 
 // Proxy enabled if in development mode
 if (process.env.NODE_ENV !== 'production') {
-  console.log('Setting up the proxy');
   app.use('/settings', proxy({target: 'http://localhost:8081'}));
   app.use('/static', proxy({target: 'http://localhost:8081'}));
   app.use('/sockjs-node', proxy({target: 'http://localhost:8081'}));

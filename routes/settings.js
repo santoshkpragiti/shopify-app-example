@@ -7,8 +7,6 @@ const ShopifyToken = require('../services/shopify-token');
 /* TODO: Need to create middleware for validating that subscriber has cookie */
 router.get('/', (req, res, next) => {
 
-  console.log('I am in the settings route');
-
   if (req.query.shop && req.session.ShopifyTokens[req.query.shop] && req.query.apiKey) {
     //Get the token from the session
     //const token = req.session.ShopifyTokens[req.query.shop];

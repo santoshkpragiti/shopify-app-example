@@ -54,7 +54,7 @@ router.get('/shopify/callback', function(req, res, next) {
           shop: token
         };
       }
-      res.redirect('/settings?shop=' + shop + '&apiKey=' + ShopifyToken.apiKey);
+      res.redirect('https://'+shop+'/admin/apps/'+ShopifyToken.apiKey+'/settings?shop=' + shop + '&apiKey=' + ShopifyToken.apiKey);
     })
     .catch((err) => next(err));
 });
