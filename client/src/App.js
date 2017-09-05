@@ -23,7 +23,7 @@ class App extends Component {
             </p>
             <br/>
             <p>
-              Welcome to your Shopify React App.
+              Welcome to your Shopify React App. OMG This is in Heroku!
             </p>
           </Card>
         </Page>
