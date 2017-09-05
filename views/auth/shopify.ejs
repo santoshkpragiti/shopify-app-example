@@ -17,6 +17,7 @@
           location: "<%- authUrl %>"
         }
       });
+      console.log('tried to change location');
       window.parent.postMessage(message, "https://<%= shopHandle + '.myshopify.com' %>");
     }
   </script>

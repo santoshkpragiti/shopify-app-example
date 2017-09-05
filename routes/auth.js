@@ -4,6 +4,8 @@ const ShopifyToken = require('../services/shopify-token');
 
 /* Shopify Auth Initialization */
 router.get('/shopify', (req, res, next) => {
+  
+  console.log('I am here in the auth shopify');
 
   if (req.query.shop && req.query.shop.includes('.myshopify.com')) {
     //Get the shop handle from <shop>.myshopify.com
@@ -36,23 +38,23 @@ router.get('/shopify/callback', function(req, res, next) {
     return res.status(403).end("Authentication failed. Please access this app from your Shopify Store Admin Panel");
   }
 
+  //code comming from shopify
   const code = req.query.code;
-  const hostname = req.query.shop;
+  //Complete shop name including .myshopify.com
+  const shop = req.query.shop;
 
-  ShopifyToken.getAccessToken(hostname, code)
+  ShopifyToken.getAccessToken(shop, code)
     .then((token) => {
-      // Shop name
-      const shopHandle = hostname.split('.myshopify.com')[0];
 
       if (req.session.ShopifyTokens) {
-        req.session.ShopifyTokens[hostname] = token;
+        req.session.ShopifyTokens[shop] = token;
       }
       else {
         req.session.ShopifyTokens = {
-          hostname: token
+          shop: token
         };
       }
-      res.redirect('/settings?shop=' + hostname);
+      res.redirect('/settings?shop=' + shop + '&apiKey=' + ShopifyToken.apiKey);
     })
     .catch((err) => next(err));
 });

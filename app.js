@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
+const proxy = require('http-proxy-middleware');
 
 // Require Keys from dev or prod depending on node env
 const keys = require('./config/keys');
@@ -15,10 +16,9 @@ const keys = require('./config/keys');
 var index = require('./routes/index');
 var users = require('./routes/users');
 const authRoutes = require('./routes/auth');
-const settingsRoutes = require('./routes/settings');
 
 // Connect to MongoDB
-mongoose.connect(keys.mongoUri, {useMongoClient: true});
+mongoose.connect(keys.mongoUri, { useMongoClient: true });
 
 // Verify that the connection is stablished
 const db = mongoose.connection;
@@ -39,6 +39,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//Public Paths
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Define the express session
@@ -52,7 +54,19 @@ app.use(session({
 app.use('/', index);
 app.use('/users', users);
 app.use('/auth', authRoutes);
-app.use('/settings', settingsRoutes);
+
+// Proxy enabled if in development mode
+if (process.env.NODE_ENV !== 'production') {
+  console.log('Setting up the proxy');
+  app.use('/settings', proxy({target: 'http://localhost:8081'}));
+  app.use('/static', proxy({target: 'http://localhost:8081'}));
+  app.use('/sockjs-node', proxy({target: 'http://localhost:8081'}));
+}else{
+  const settingsRoutes = require('./routes/settings');
+  // Express will serve up production assets main.js and main.css
+  app.use(express.static(path.join(__dirname, 'client', 'build')));
+  app.use('/settings', settingsRoutes);
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
