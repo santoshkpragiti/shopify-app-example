@@ -6,14 +6,9 @@
   <script type='text/javascript'>
     // If the current window is the 'parent', change the URL by setting location.href
     if (window.top == window.self) {
-<<<<<<< HEAD
       
       window.top.location.href = "<%- authUrl %>";
       
-=======
-      window.top.location.href = "<%- authUrl %>";
-
->>>>>>> 01-EASDK-Skeleton
       // If the current window is the 'child', change the parent's URL with postMessage
     }
     else {
@@ -23,18 +18,11 @@
           location: "<%- authUrl %>"
         }
       });
-<<<<<<< HEAD
       window.parent.postMessage(message, "https://<%- shopHandle + '.myshopify.com' %>");
-=======
-      console.log('tried to change location');
-      window.parent.postMessage(message, "https://<%= shopHandle + '.myshopify.com' %>");
->>>>>>> 02-add-react
     }
   </script>
 </head>
 
 <body>
-
 </body>
-
 </html>
